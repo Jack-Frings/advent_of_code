@@ -1,5 +1,5 @@
 def part_one():
-    with open("data.txt") as file:
+    with open("distances.txt") as file:
         lines = list(file.readlines())
     for index, line in enumerate(lines):
         lines[index] = line.strip("\n")
@@ -22,7 +22,7 @@ def part_one():
     return diff
 
 def part_two():
-    with open("data.txt") as file:
+    with open("distances.txt") as file:
         lines = list(file.readlines())
     for index, line in enumerate(lines):
         lines[index] = line.strip("\n")
@@ -48,4 +48,5 @@ def part_two():
 
 
 if __name__ == "__main__":
-    print(part_two())
+    print(f"Part One: {part_one()}")
+    print(f"Part Two: {part_two()}")
