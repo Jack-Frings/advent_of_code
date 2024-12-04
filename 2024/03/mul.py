@@ -17,7 +17,7 @@ def part_one():
         try: 
             a, b = val.split(",")
             total += int(a)*int(b)
-        except Exception:
+        except ValueError:
             continue
 
     return total
@@ -52,7 +52,7 @@ def part_two():
             if do:
                 a, b = val.split(",")
                 total += int(a)*int(b)
-        except Exception:
+        except ValueError:
             continue
     
     return total
