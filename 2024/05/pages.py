@@ -1,5 +1,5 @@
 def part_one():
-    with open("day5.txt") as file:
+    with open("pages.txt") as file:
         lines = list(file.readlines())
         lines = [line.strip("\n") for line in lines] 
     before = []
@@ -34,7 +34,7 @@ def part_one():
     return sum
             
 def part_two():
-    with open("day5.txt") as file:
+    with open("pages.txt") as file:
         lines = list(file.readlines())
         lines = [line.strip("\n") for line in lines] 
     before = []
@@ -77,14 +77,17 @@ def part_two():
         while len(final_line) < length:
             for search_index, search_num in enumerate(original):
                 valid = True
-                # Before
+                # Check if an element should come first according to rules 
+                # One page will always pass this check
                 for index, num in enumerate(after):
                     if search_num == num:
                         if before[index] in line_nums:
                             valid = False 
+                # When a page passes, add that page to the sorted page list
                 if valid:
                     final_line.append(search_num)
                     line_nums.remove(search_num)
+
         middle = int((len(final_line)-1)/2)
         sum += int(final_line[middle])
 
