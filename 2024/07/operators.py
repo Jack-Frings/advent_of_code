@@ -2,7 +2,7 @@ import time
 start_time = time.time()
 
 def part_one():
-    with open("day7.txt") as file:
+    with open("operators.txt") as file:
         lines = list(file.readlines())
         lines = [line.strip("\n") for line in lines]
     
@@ -43,7 +43,7 @@ def get_operators(operators, num_of_operators):
     mult = get_operators(operators+"*", num_of_operators)
 
 def part_two():
-    with open("day7.txt") as file:
+    with open("operators.txt") as file:
         lines = list(file.readlines())
         lines = [line.strip("\n") for line in lines]
     
