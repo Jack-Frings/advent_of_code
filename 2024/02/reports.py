@@ -1,5 +1,8 @@
+import time 
+start_time = time.time()
+
 def part_one():
-    with open("day2.txt") as file:
+    with open("reports.txt") as file:
         lines = list(file.readlines())
     for index, line in enumerate(lines):
         lines[index] = line.strip("\n")
@@ -20,7 +23,7 @@ def part_one():
     return count
 
 def part_two():
-    with open("day2.txt") as file:
+    with open("reports.txt") as file:
         lines = list(file.readlines())
     for index, line in enumerate(lines):
         lines[index] = line.strip("\n")
@@ -52,3 +55,6 @@ def line_safe(line):
 if __name__ == "__main__":
     print(f"Part One: {part_one()}")
     print(f"Part Two: {part_two()}")
+
+    end_time = time.time()
+    print(f"Execution Time: {end_time - start_time}")

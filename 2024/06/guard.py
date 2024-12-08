@@ -1,3 +1,6 @@
+import time 
+start_time = time.time()
+
 def part_one():
     with open("guard.txt") as file:
         lines = list(file.readlines())
@@ -119,3 +122,6 @@ def loop_test(lines, x_pos, y_pos, direction):
 if __name__ == "__main__":
     print(f"Part One: {part_one()}")
     print(f"Part Two: {part_two()}")
+
+    end_time = time.time()
+    print(f"Execution Time: {end_time - start_time}")
