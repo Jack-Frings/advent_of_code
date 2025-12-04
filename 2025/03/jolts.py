@@ -2,7 +2,7 @@ import time
 start = time.time()
 
 def part_one():
-    with open("3.txt") as file:
+    with open("jolts.txt") as file:
         lines = list(file.readlines())
         lines = [line.strip("\n") for line in lines]
 
@@ -20,7 +20,7 @@ def part_one():
     return sum
 
 def part_two():
-    with open("3.txt") as file:
+    with open("jolts.txt") as file:
         lines = list(file.readlines())
         lines = [line.strip("\n") for line in lines]
 
@@ -28,17 +28,13 @@ def part_two():
 
     for line in lines:
         line = [int(char) for char in line]
-        vals = []
+        vals = ""
         start = 0
         for i in range(12):
-            vals.append(max(line[start:len(line)-11+i]))
-            start = line[start:].index(vals[i]) + 1 + start
+            vals += str(max(line[start:len(line)-11+i]))
+            start = line[start:].index(int(vals[i])) + 1 + start
 
-        num = ""
-        for val in vals:
-            num += str(val)
-
-        sum += int(num)
+        sum += int(vals)
         
     return sum
 
