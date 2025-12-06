@@ -39,8 +39,6 @@ def part_two():
     for i, line in enumerate(lines):
         lines[i] = line[::-1]
 
-    print(lines)
-
     for x in range(len(lines[0])):
         num = ""
         for y in range(len(lines)):
@@ -48,12 +46,10 @@ def part_two():
             if char == "+":
                 stored_nums.append(int(num))
                 total += sum(stored_nums)
-                print(sum(stored_nums))
                 stored_nums = []
                 num = ""
             elif char == "*":
                 stored_nums.append(int(num))
-                print(multiply(stored_nums))
                 total += multiply(stored_nums)
                 stored_nums = []
                 num = ""
