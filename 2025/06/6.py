@@ -33,65 +33,44 @@ def part_two():
         lines = list(file.readlines())
         lines = [line.strip("\n") for line in lines]
 
-    # Find gaps 
-    gaps = []
-    for x in range(len(lines[0])):
-        gap = True 
-        for line in lines:
-            if line[x] != " ":
-                gap = False 
-                break
-
-        if gap:
-            gaps.append(x)
-
-    # Separate the lines by the gaps into a 2D array of numbers with the whitespace still included
-    new_lines = []
-
-    for line in lines:
-        new_line = []
-        start  = 0
-        for gap in gaps:
-            new_line.append(line[start:gap])
-            start = gap + 1
-        new_line.append(line[start:])
-        new_lines.append(new_line)
-
-    # Iterate through to sum and product
-
     total = 0 
-    for i in range(len(new_lines[0])):
-        operation = new_lines[len(new_lines)-1][i].strip()
+    stored_nums = []
 
-        nums = set()
+    for i, line in enumerate(lines):
+        lines[i] = line[::-1]
 
-        # I know this longest iteration sucks but I do not care enough to change it.
-        longest = 0 
-        for line in range(len(new_lines)-1):
-            if len(new_lines[line][i]) > longest:
-                longest = len(new_lines[line][i])
+    print(lines)
 
-        for char in range(longest):
-            num = ""
-            for line in range(len(new_lines)-1):
-                if new_lines[line][i][char] != " ":
-                    num += new_lines[line][i][char] 
-            nums.add(int(num))
+    for x in range(len(lines[0])):
+        num = ""
+        for y in range(len(lines)):
+            char = lines[y][x]
+            if char == "+":
+                stored_nums.append(int(num))
+                total += sum(stored_nums)
+                print(sum(stored_nums))
+                stored_nums = []
+                num = ""
+            elif char == "*":
+                stored_nums.append(int(num))
+                print(multiply(stored_nums))
+                total += multiply(stored_nums)
+                stored_nums = []
+                num = ""
+            elif char == " ":
+                continue
+            else:
+                num += char 
+        if num != "": 
+            stored_nums.append(int(num))
 
+    return total
 
-        if operation == "+":
-            sum = 0
-            for num in nums:
-                sum += num 
-
-        elif operation == "*":
-            sum = 1
-            for num in nums:
-                sum *= num
-
-        total += sum
-
-    return total   
+def multiply(lst):
+    val = 1
+    for i in lst:
+        val *= i 
+    return val
 
 if __name__ == "__main__":
     print(f"Part One: {part_one()}")
