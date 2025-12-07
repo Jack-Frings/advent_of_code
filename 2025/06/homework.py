@@ -2,7 +2,7 @@ import time, copy
 start = time.time()
 
 def part_one():
-    with open("6.txt") as file:
+    with open("homework.txt") as file:
         lines = list(file.readlines())
         lines = [line.strip("\n") for line in lines]
 
@@ -29,7 +29,7 @@ def part_one():
     return sum
 
 def part_two():
-    with open("6.txt") as file:
+    with open("homework.txt") as file:
         lines = list(file.readlines())
         lines = [line.strip("\n") for line in lines]
 
