@@ -83,12 +83,11 @@ def part_two():
     areas = dict(sorted(areas.items(), key=lambda area: area[1], reverse=True))
 
     keys = list(areas.keys())
-    length = len(keys) 
 
-    history = set()
+    enclosed_history = set()
+    unenclosed_history = set()
 
     for i in range(len(keys)):
-        print(f"{i+1}/{length}")
         point_a, point_b = keys[i] 
         x1, y1 = point_a
         x2, y2 = point_b
@@ -96,36 +95,52 @@ def part_two():
         fully_enclosed = True 
 
         for x in range(min(x1, x2), max(x1, x2) + 1):
-            if (x, y1) in history: pass
+            if (x, y1) in enclosed_history: pass
+            elif (x, y1) in unenclosed_history:
+                fully_enclosed = False
+                break
             elif not enclosed((x, y1)):
+                unenclosed_history.add((x, y1))
                 fully_enclosed = False 
                 break
             else:
-                history.add((x, y1))
+                enclosed_history.add((x, y1))
 
-            if (x, y2) in history: pass
+            if (x, y2) in enclosed_history: pass
+            elif (x, y2) in unenclosed_history:
+                fully_enclosed = False
+                break
             elif not enclosed((x, y2)):
+                unenclosed_history.add((x, y2))
                 fully_enclosed = False 
                 break
             else:
-                history.add((x, y2))
+                enclosed_history.add((x, y2))
 
         if not fully_enclosed: continue 
 
         for y in range(min(y1, y2), max(y1, y2) + 1):
-            if (x1, y) in history: pass
+            if (x1, y) in enclosed_history: pass
+            elif (x1, y) in unenclosed_history:
+                fully_enclosed = False
+                break
             elif not enclosed((x1, y)):
+                unenclosed_history.add((x1, y))
                 fully_enclosed = False 
                 break
             else:
-                history.add((x1, y))
+                enclosed_history.add((x1, y))
 
-            if (x2, y) in history: pass
+            if (x2, y) in enclosed_history: pass
+            elif (x2, y) in unenclosed_history:
+                fully_enclosed = False
+                break
             elif not enclosed((x2, y)):
+                unenclosed_history.add((x2, y))
                 fully_enclosed = False 
                 break
             else:
-                history.add((x2, y))
+                enclosed_history.add((x2, y))
 
         if not fully_enclosed: continue 
 
@@ -146,24 +161,6 @@ def enclosed(point):
         return False 
 
     return True
-
-
-    # display = list()
-    # row = "." * 14
-    # for y in range(9):
-    #     display.append(copy.deepcopy(row))
-    #
-    # for point in points:
-    #     x, y = point 
-    #     display[y] = display[y][:x] + "X" + display[y][x+1:]
-    #
-    # for point in red_points:
-    #     x, y = point 
-    #     display[y] = display[y][:x] + "O" + display[y][x+1:]
-    #
-    # for row in display:
-    #     print(row)
-
 
 if __name__ == "__main__":
     print(f"Part One: {part_one()}")
