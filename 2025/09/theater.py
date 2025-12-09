@@ -71,59 +71,65 @@ def part_two():
         vals = sorted(points["y"][y]) 
         points["y"][y] = [vals[0], vals[-1]]
 
-    history = set()
-
-    area = 0
-    iterations = len(red_points) ** 2 
-    i = 0
+    areas = {}
     for point_a in red_points:
         for point_b in red_points:
-            i += 1 
-            print(f"{i}/{iterations}")
-            if point_a == point_b: continue
-            new_area = getArea(point_a, point_b)
-            if new_area > area:
-                x1, y1 = point_a 
-                x2, y2 = point_b
-                fully_enclosed = True 
+            if point_a == point_b: continue 
+            passed_points = areas.keys() 
+            if not ((point_a, point_b) in passed_points or (point_b, point_a) in passed_points):
+                new_area = getArea(point_a, point_b)
+                areas[(point_a, point_b)] = new_area
 
-                for x in range(min(x1, x2), max(x1, x2) + 1):
-                    if (x, y1) in history: pass
-                    elif not enclosed((x, y1)):
-                        fully_enclosed = False 
-                        break
-                    else:
-                        history.add((x, y1))
+    areas = dict(sorted(areas.items(), key=lambda area: area[1], reverse=True))
 
-                    if (x, y2) in history: pass
-                    elif not enclosed((x, y2)):
-                        fully_enclosed = False 
-                        break
-                    else:
-                        history.add((x, y2))
+    keys = list(areas.keys())
+    length = len(keys) 
 
-                if not fully_enclosed: continue 
+    history = set()
 
-                for y in range(min(y1, y2), max(y1, y2) + 1):
-                    if (x1, y) in history: pass
-                    elif not enclosed((x1, y)):
-                        fully_enclosed = False 
-                        break
-                    else:
-                        history.add((x1, y))
+    for i in range(len(keys)):
+        print(f"{i+1}/{length}")
+        point_a, point_b = keys[i] 
+        x1, y1 = point_a
+        x2, y2 = point_b
 
-                    if (x2, y) in history: pass
-                    elif not enclosed((x2, y)):
-                        fully_enclosed = False 
-                        break
-                    else:
-                        history.add((x2, y))
+        fully_enclosed = True 
 
-                if not fully_enclosed: continue 
+        for x in range(min(x1, x2), max(x1, x2) + 1):
+            if (x, y1) in history: pass
+            elif not enclosed((x, y1)):
+                fully_enclosed = False 
+                break
+            else:
+                history.add((x, y1))
 
-                area = new_area
+            if (x, y2) in history: pass
+            elif not enclosed((x, y2)):
+                fully_enclosed = False 
+                break
+            else:
+                history.add((x, y2))
 
-    return area
+        if not fully_enclosed: continue 
+
+        for y in range(min(y1, y2), max(y1, y2) + 1):
+            if (x1, y) in history: pass
+            elif not enclosed((x1, y)):
+                fully_enclosed = False 
+                break
+            else:
+                history.add((x1, y))
+
+            if (x2, y) in history: pass
+            elif not enclosed((x2, y)):
+                fully_enclosed = False 
+                break
+            else:
+                history.add((x2, y))
+
+        if not fully_enclosed: continue 
+
+        return areas[(keys[i])]
 
 def enclosed(point):
     global points 
