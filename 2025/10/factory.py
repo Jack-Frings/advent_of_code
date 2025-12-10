@@ -67,6 +67,16 @@ def part_two():
                     equation.append(0)
             equations.append(equation)
 
+        """
+        I'm so glad this works. I'm just writing a bit of documentation here mostly so that I can remember how this all works for future 
+        AoC problems. Basically, I'm creating a matrix for a system of equations here. Each equation has a variable for the number of
+        times that each button has been pressed. These variables are then multiplied by a coefficient of 1 or 0 depending on if it affects 
+        the joltage while the entire equation is set equal to the end joltage. The minimization_function just adds together all of the button
+        presses for all the buttons (as that's what we're minimizing). The bounds specifies that you can't have negative button presses, and 
+        the integrality specifies that the solutions have to be integers (cannot have decimals). All of this information is then plugged into 
+        scipy.optimize.linprog() [https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#scipy.optimize.linprog]
+        """
+
         coefficients = np.array(equations)
         joltages = np.array(joltages)
 
@@ -76,8 +86,7 @@ def part_two():
 
         answer = scipy.optimize.linprog(minimization_function, A_eq=coefficients, b_eq=joltages, bounds=bounds, integrality=integrality)
 
-        change = int(dict(answer)['fun'])
-        button_presses += change
+        button_presses += int(answer['fun'])
 
 
 
