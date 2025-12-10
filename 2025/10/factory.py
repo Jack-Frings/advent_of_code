@@ -1,5 +1,6 @@
 import time, copy
 import numpy as np
+import scipy
 start = time.time()
 
 def part_one():
@@ -46,7 +47,7 @@ def part_two():
         lines = list(file.readlines())
         lines = [line.strip("\n") for line in lines]
 
-    length = len(lines)
+    lines_length = len(lines)
 
     button_presses = 0
     for line in lines:
@@ -68,8 +69,17 @@ def part_two():
 
         coefficients = np.array(equations)
         joltages = np.array(joltages)
-        estimated_val = sum(list(np.linalg.lstsq(coefficients, joltages))[0].tolist())
-        print(estimated_val)
+
+        minimization_function = [1 for i in equation] 
+        bounds = [(0, None) for i in equation]
+        integrality = [1 for i in equation]
+
+        answer = scipy.optimize.linprog(minimization_function, A_eq=coefficients, b_eq=joltages, bounds=bounds, integrality=integrality)
+
+        change = int(dict(answer)['fun'])
+        button_presses += change
+
+
 
     return button_presses
 
